@@ -23,7 +23,7 @@ namespace Clients.Provider.EntityFramework
         public async Task<IQueryable<IClientModel>> QueryClientsAsync()
         {
             var entities = await _dbContext.Clients.ToListAsync();
-            return entities.ToClientModels().AsQueryable();
+            return entities.ToClientModels().AsQueryable(); ;
         }
     }
 }

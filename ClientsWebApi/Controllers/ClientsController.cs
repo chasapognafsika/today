@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Clients.Domain.Models;
 using Clients.Domain.Services;
 using Clients.WebApi.Models;
@@ -26,15 +27,10 @@ namespace Clients.WebApi
 
         // GET: api/Clients
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ClientDTO>>> GetClients()
+        public async Task<ActionResult<IEnumerable<IClientModel>>> GetClients()
         {
-            //var test = await _queryClientsService.QueryClientsAsync();
-            //var list = test.
-
-
-            //return test.GetEnumerator(x => ItemToDTO(x))
-            //    .ToListAsync();
-
+            var entities =  await _queryClientsService.QueryClientsAsync();
+            return Ok(entities);
         }
 
         // GET: api/Clients/5
