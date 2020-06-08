@@ -5,6 +5,6 @@ namespace Clients.Data
 {
     public interface IDbContext : IAbstractDbContext
     {
-        DbSet<ClientEntity> clients { get; set; }
+        DbSet<ClientEntity> Clients { get; set; }
     }
 }

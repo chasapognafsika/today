@@ -6,10 +6,13 @@ using Clients.Data.Entities;
 
 namespace SqlDb
 {
-#pragma warning disable CS8644 // Type does not implement interface member. Nullability of reference types in interface implemented by the base type doesn't match.
-    public class SqlDbContext : DbContext, IDbContext
-#pragma warning restore CS8644 // Type does not implement interface member. Nullability of reference types in interface implemented by the base type doesn't match.
+  public class SqlDbContext : DbContext, IDbContext
     {
+        public DbSet<ClientEntity> Clients { get; set; }
+
+        public SqlDbContext(DbContextOptions<SqlDbContext> options): base(options)
+        { }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -33,6 +36,6 @@ namespace SqlDb
             base.OnModelCreating(modelBuilder);
         }
 
-        public DbSet<ClientEntity> clients { get; set; }
+
    }
 }

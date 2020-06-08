@@ -9,6 +9,7 @@ namespace Client.Services
     public class ClientService : IClientService
     {
         IClientProvider _provider;
+        public const int idNotSupported = 9999;
 
         public ClientService(IClientProvider provider)
         {
@@ -17,8 +18,8 @@ namespace Client.Services
 
         public async Task<IClientModel> GetClientAsync(int id)
         {
-            if (id == 666)
-                throw new Exception("Evil IDs are not supported.");
+            if (id == idNotSupported)
+                throw new Exception("This ID is not supported.");
 
             return await _provider.GetClientAsync(id);
         }
@@ -30,9 +31,6 @@ namespace Client.Services
 
         public async Task UpdateClientAsync(IClientModel student)
         {
-            //if (student.birthDate >= DateTime.UtcNow)
-            //    throw new Exception("Invalid birth date.");
-
             await _provider.UpdateClientAsync(student);
         }
 
@@ -46,13 +44,13 @@ namespace Client.Services
 
         public async Task UndeleteClientAsync(int id)
         {
-            if (id == 666)
-                throw new Exception("Evil IDs cannot be revived.");
+            if (id == idNotSupported)
+                throw new Exception("Unsupported IDs cannot be revived.");
 
-            var student = await _provider.GetClientAsync(id);
-            student.isDeleted = false;
+            var client = await _provider.GetClientAsync(id);
+            client.isDeleted = false;
 
-            await _provider.UpdateClientAsync(student);
+            await _provider.UpdateClientAsync(client);
         }
 
     }

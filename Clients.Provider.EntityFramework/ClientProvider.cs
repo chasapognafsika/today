@@ -18,7 +18,7 @@ namespace Clients.Provider.EntityFramework
 
         public async Task<IClientModel> GetClientAsync(int id)
         {
-            var entity = await db.clients.FirstOrDefaultAsync(s => s.id == id);
+            var entity = await db.Clients.FirstOrDefaultAsync(s => s.id == id);
 
             return entity.ToClientModel();
         }
@@ -27,7 +27,7 @@ namespace Clients.Provider.EntityFramework
         {
             var entity = client.ToClientEntity();
 
-            var addAsyncResult = await db.clients.AddAsync(entity);
+            var addAsyncResult = await db.Clients.AddAsync(entity);
             await db.SaveChangesAsync();
 
             return addAsyncResult.Entity.id;
@@ -35,18 +35,18 @@ namespace Clients.Provider.EntityFramework
 
         public async Task UpdateClientAsync(IClientModel client)
         {
-            var entity = await db.clients.FindAsync(client.id);
+            var entity = await db.Clients.FindAsync(client.id);
             db.Entry(entity).CurrentValues.SetValues(client.ToClientEntity());
 
-            db.clients.Update(entity);
+            db.Clients.Update(entity);
             await db.SaveChangesAsync();
         }
 
         public async Task DeleteClientAsync(int id)
         {
-            var student = await db.clients.FindAsync(id);
+            var student = await db.Clients.FindAsync(id);
 
-            db.clients.Remove(student);
+            db.Clients.Remove(student);
             await db.SaveChangesAsync();
         }
     }

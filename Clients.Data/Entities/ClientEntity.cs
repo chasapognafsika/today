@@ -20,12 +20,12 @@ namespace Clients.Data.Entities
         public string email { get; set; } = string.Empty;
 
         [Required, MaxLength(10)]
-        public string gender { get; } = string.Empty;
+        public string gender { get; set; } = string.Empty;
 
         [Required, MaxLength(20)]
         public string ipAddress { get; set; } = string.Empty;
 
-        public DateTime createdDate { get; }
+        public DateTime createdDate { get; set; }
 
         public bool deleted { get; set; }
     }

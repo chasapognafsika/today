@@ -1,4 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Clients.Data.Entities;
+using Clients.Domain.Models;
+using Clients.Domain.Services;
+using Clients.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -9,43 +14,101 @@ namespace Hexagonal3.Controllers
     public class ClientsController : ControllerBase
     {
         private readonly ILogger<ClientsController> _logger;
+        private readonly IClientService _clientService;
+        private readonly IQueryClientsService _queryClientsService;
 
-        public ClientsController(ILogger<ClientsController> logger)
+        public ClientsController(ILogger<ClientsController> logger,
+                                 IClientService clientService,
+                                 IQueryClientsService queryClientsService)
         {
             _logger = logger;
+            _clientService = clientService;
+            _queryClientsService = queryClientsService;
         }
 
+        //// GET: api/Clients
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<ClientDTO>>> GetClients()
+        //{
+        //    //var test = await _queryClientsService.QueryClientsAsync();
+        //    //var list = test.
 
-        // GET: api/Clients
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+
+        //    //return test.GetEnumerator(x => ItemToDTO(x))
+        //    //    .ToListAsync();
+
+        //}
 
         // GET: api/Clients/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ClientDTO>> GetClient(int id)
         {
-            return "value";
+            var client = await _clientService.GetClientAsync(id);
+
+            if (client == null)
+            {
+                return NotFound();
+            }
+
+            return ClientToDTO(client);
+
         }
 
         // POST: api/Clients
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult<ClientDTO>> CreateClient(IClientModel client)
         {
+            await _clientService.AddClientAsync(client);
+
+            return CreatedAtAction(nameof(GetClient), new { client.id }, client);
         }
 
         // PUT: api/Clients/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> UpdateClient(int id, IClientModel client)
         {
+            if (id != client.id)
+            {
+                return BadRequest();
+            }
+            await _clientService.UpdateClientAsync(client);
+            return NoContent();
         }
 
-        // DELETE: api/ApiWithActions/5
+        // DELETE: api/Clients/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> DeleteClient(int id)
         {
+            await _clientService.DeleteClientAsync(id);
+
+            return NoContent();
         }
+
+        private static ClientDTO ClientToDTO(IClientModel client) =>
+            new ClientDTO
+            {
+                Id = client.id,
+                FirstName = client.firstName,
+                LastName = client.lastName,
+                Email = client.email,
+                Gender = client.gender,
+                IpAddress = client.ipAddress,
+                CreatedDate = client.createdDate,
+                IsDeleted = client.isDeleted,
+            };
+
+        //private static ClientEntity ClientDTOToClient(ClientDTO client) =>
+        //    new ClientEntity
+        //    {
+        //        id = client.Id,
+        //        firstName = client.FirstName,
+        //        lastName = client.LastName,
+        //        email = client.Email,
+        //        gender = client.Gender,
+        //        ipAddress = client.IpAddress,
+        //        createdDate = client.CreatedDate,
+        //        deleted = client.IsDeleted,
+        //    };
     }
+
 }

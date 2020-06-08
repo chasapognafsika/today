@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Clients.Data;
 using Clients.Domain.Models;
 using Clients.Domain.Providers;
@@ -11,23 +13,16 @@ namespace Clients.Provider.EntityFramework
 {
     public class QueryClientsProvider : IQueryClientsProvider
     {
-        public IDbContext db { get; }
+        public IDbContext _dbContext { get; }
 
         public QueryClientsProvider(IDbContext dbContext)
         {
-            db = dbContext;
+            _dbContext = dbContext;
         }
 
-        public IQueryable<IClientModel> QueryClientsAsync(Expression<Func<IClientModel, bool>> filter, int? skip, int? top)
+        public async Task<IQueryable<IClientModel>> QueryClientsAsync()
         {
-            var where = filter.ToClientEntityFilterExpression().Compile();
-
-            var entities = db.clients
-                .AsNoTracking()
-                .Where(where)
-                .Skip(skip ?? 0)
-                .Take(top ?? int.MaxValue);
-
+            var entities = await _dbContext.Clients.ToListAsync();
             return entities.ToClientModels().AsQueryable();
         }
     }
