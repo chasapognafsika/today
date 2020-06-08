@@ -16,8 +16,6 @@ namespace Clients.Domain.Models
 
         string ipAddress { get; set; }
 
-        DateTime createdDate { get; set; }
-
         bool isDeleted { get; set; }
       
     }

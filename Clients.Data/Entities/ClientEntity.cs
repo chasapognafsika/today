@@ -25,8 +25,6 @@ namespace Clients.Data.Entities
         [Required, MaxLength(20)]
         public string ipAddress { get; set; } = string.Empty;
 
-        public DateTime createdDate { get; set; }
-
         public bool deleted { get; set; }
     }
 

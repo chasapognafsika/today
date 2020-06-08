@@ -6,23 +6,21 @@ using System.Threading.Tasks;
 
 namespace Clients.WebApi.Models
 {
-    public class ClientDTO
+    public class ClientDTO : IClientModel
     {
-        public int Id { get; set; }
+        public int id { get; set; }
 
-        public string FirstName { get; set; }
+        public string firstName { get; set; }
 
-        public string LastName { get; set; }
+        public string lastName { get; set; }
 
-        public string Email { get; set; }
+        public string email { get; set; }
 
-        public string Gender { get; set; }
+        public string gender { get; set; }
 
-        public string IpAddress { get; set; }
+        public string ipAddress { get; set; }
 
-        public DateTime CreatedDate { get; set; }
-
-        public bool IsDeleted { get; set; }
+        public bool isDeleted { get; set; }
     }
 }
 

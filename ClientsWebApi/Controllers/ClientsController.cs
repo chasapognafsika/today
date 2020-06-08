@@ -56,11 +56,13 @@ namespace Hexagonal3.Controllers
 
         // POST: api/Clients
         [HttpPost]
-        public async Task<ActionResult<ClientDTO>> CreateClient(IClientModel client)
+        public async Task<ActionResult<ClientDTO>> CreateClient(ClientDTO client)
         {
             await _clientService.AddClientAsync(client);
 
-            return CreatedAtAction(nameof(GetClient), new { client.id }, client);
+            return CreatedAtAction(nameof(GetClient), 
+                new { id = client.id },
+                ClientToDTO(client));
         }
 
         // PUT: api/Clients/5
@@ -87,15 +89,16 @@ namespace Hexagonal3.Controllers
         private static ClientDTO ClientToDTO(IClientModel client) =>
             new ClientDTO
             {
-                Id = client.id,
-                FirstName = client.firstName,
-                LastName = client.lastName,
-                Email = client.email,
-                Gender = client.gender,
-                IpAddress = client.ipAddress,
-                CreatedDate = client.createdDate,
-                IsDeleted = client.isDeleted,
+                id = client.id,
+                firstName = client.firstName,
+                lastName = client.lastName,
+                email = client.email,
+                gender = client.gender,
+                ipAddress = client.ipAddress,
+                isDeleted = client.isDeleted,
             };
+
+
 
         //private static ClientEntity ClientDTOToClient(ClientDTO client) =>
         //    new ClientEntity

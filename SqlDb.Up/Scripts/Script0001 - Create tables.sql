@@ -6,7 +6,6 @@
 	email nvarchar(50) NOT NULL,
 	gender nvarchar(10) NOT NULL,
 	ipAddress nvarchar(20) NOT NULL,
-	createdDate datetime NOT NULL,
 	deleted bit NOT NULL
 	) ON [PRIMARY]
 GO
@@ -16,13 +15,7 @@ ALTER TABLE dbo.Client ADD CONSTRAINT
 	(
 	id
 	) ON [PRIMARY]
-
 GO
-
-ALTER TABLE dbo.Client ADD CONSTRAINT
-	DF_Client_createdDate DEFAULT GetUtcDate() FOR createdDate
-GO
-
 
 ALTER TABLE dbo.Client ADD CONSTRAINT
 	DF_Client_deleted DEFAULT 0 FOR deleted

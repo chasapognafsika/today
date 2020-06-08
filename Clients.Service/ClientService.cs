@@ -24,22 +24,22 @@ namespace Client.Services
             return await _provider.GetClientAsync(id);
         }
 
-        public async Task<int> AddClientAsync(IClientModel student)
+        public async Task<int> AddClientAsync(IClientModel client)
         {
-            return await _provider.AddClientAsync(student);
+            return await _provider.AddClientAsync(client);
         }
 
-        public async Task UpdateClientAsync(IClientModel student)
+        public async Task UpdateClientAsync(IClientModel client)
         {
-            await _provider.UpdateClientAsync(student);
+            await _provider.UpdateClientAsync(client);
         }
 
         public async Task DeleteClientAsync(int id)
         {
-            var student = await _provider.GetClientAsync(id);
+            var client = await _provider.GetClientAsync(id);
             student.isDeleted = true;
 
-            await _provider.UpdateClientAsync(student);
+            await _provider.UpdateClientAsync(client);
         }
 
         public async Task UndeleteClientAsync(int id)
