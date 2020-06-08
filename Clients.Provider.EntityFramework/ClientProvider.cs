@@ -9,16 +9,16 @@ namespace Clients.Provider.EntityFramework
 {
     public class ClientProvider : IClientProvider
     {
-        public IDbContext db { get; }
+        public IDbContext _dbContext { get; }
 
         public ClientProvider(IDbContext dbContext)
         {
-            db = dbContext;
+            _dbContext = dbContext;
         }
 
         public async Task<IClientModel> GetClientAsync(int id)
         {
-            var entity = await db.Clients.FirstOrDefaultAsync(s => s.id == id);
+            var entity = await _dbContext.Clients.FirstOrDefaultAsync(s => s.id == id);
 
             return entity.ToClientModel();
         }
@@ -27,27 +27,27 @@ namespace Clients.Provider.EntityFramework
         {
             var entity = client.ToClientEntity();
 
-            var addAsyncResult = await db.Clients.AddAsync(entity);
-            await db.SaveChangesAsync();
+            var addAsyncResult = await _dbContext.Clients.AddAsync(entity);
+            await _dbContext.SaveChangesAsync();
 
             return addAsyncResult.Entity.id;
         }
 
         public async Task UpdateClientAsync(IClientModel client)
         {
-            var entity = await db.Clients.FindAsync(client.id);
-            db.Entry(entity).CurrentValues.SetValues(client.ToClientEntity());
+            var entity = await _dbContext.Clients.FindAsync(client.id);
+            _dbContext.Entry(entity).CurrentValues.SetValues(client.ToClientEntity());
 
-            db.Clients.Update(entity);
-            await db.SaveChangesAsync();
+            _dbContext.Clients.Update(entity);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task DeleteClientAsync(int id)
         {
-            var student = await db.Clients.FindAsync(id);
+            var student = await _dbContext.Clients.FindAsync(id);
 
-            db.Clients.Remove(student);
-            await db.SaveChangesAsync();
+            _dbContext.Clients.Remove(student);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

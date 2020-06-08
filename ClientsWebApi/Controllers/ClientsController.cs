@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Clients.Data.Entities;
+﻿using System.Threading.Tasks;
 using Clients.Domain.Models;
 using Clients.Domain.Services;
 using Clients.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Hexagonal3.Controllers
+namespace Clients.WebApi
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -26,27 +24,29 @@ namespace Hexagonal3.Controllers
             _queryClientsService = queryClientsService;
         }
 
-        //// GET: api/Clients
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<ClientDTO>>> GetClients()
-        //{
-        //    //var test = await _queryClientsService.QueryClientsAsync();
-        //    //var list = test.
+        // GET: api/Clients
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ClientDTO>>> GetClients()
+        {
+            //var test = await _queryClientsService.QueryClientsAsync();
+            //var list = test.
 
 
-        //    //return test.GetEnumerator(x => ItemToDTO(x))
-        //    //    .ToListAsync();
+            //return test.GetEnumerator(x => ItemToDTO(x))
+            //    .ToListAsync();
 
-        //}
+        }
 
         // GET: api/Clients/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ClientDTO>> GetClient(int id)
         {
+            _logger.LogInformation(LogEvents.GetItem, "Getting item {Id}", id);
             var client = await _clientService.GetClientAsync(id);
 
             if (client == null)
             {
+                _logger.LogWarning(LogEvents.GetItemNotFound, "Get({Id}) NOT FOUND", id);
                 return NotFound();
             }
 
@@ -58,7 +58,8 @@ namespace Hexagonal3.Controllers
         [HttpPost]
         public async Task<ActionResult<ClientDTO>> CreateClient(ClientDTO client)
         {
-            await _clientService.AddClientAsync(client);
+            _logger.LogInformation(LogEvents.InsertItem, "Creating new client");
+            client.id = await _clientService.AddClientAsync(client);
 
             return CreatedAtAction(nameof(GetClient), 
                 new { id = client.id },
@@ -67,10 +68,12 @@ namespace Hexagonal3.Controllers
 
         // PUT: api/Clients/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateClient(int id, IClientModel client)
+        public async Task<IActionResult> UpdateClient(int id, ClientDTO client)
         {
+            _logger.LogInformation(LogEvents.UpdateItem, "Updating client {Id}", id);
             if (id != client.id)
             {
+                _logger.LogWarning(LogEvents.UpdateItemNotFound, "Get({Id}) NOT FOUND", id);
                 return BadRequest();
             }
             await _clientService.UpdateClientAsync(client);
@@ -97,21 +100,6 @@ namespace Hexagonal3.Controllers
                 ipAddress = client.ipAddress,
                 isDeleted = client.isDeleted,
             };
-
-
-
-        //private static ClientEntity ClientDTOToClient(ClientDTO client) =>
-        //    new ClientEntity
-        //    {
-        //        id = client.Id,
-        //        firstName = client.FirstName,
-        //        lastName = client.LastName,
-        //        email = client.Email,
-        //        gender = client.Gender,
-        //        ipAddress = client.IpAddress,
-        //        createdDate = client.CreatedDate,
-        //        deleted = client.IsDeleted,
-        //    };
     }
 
 }
