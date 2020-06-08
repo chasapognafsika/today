@@ -26,10 +26,10 @@ namespace Clients.Service.Tests
         [Fact]
         public async Task GetClientAsync_Should_Succeed()
         {
-            var student = await _clientService.GetClientAsync(_testClientId);
+            var client = await _clientService.GetClientAsync(_testClientId);
 
-            Guid.Parse(student.firstName);
-            Guid.Parse(student.lastName);
+            Guid.Parse(client.firstName);
+            Guid.Parse(client.lastName);
         }
 
         [Fact]

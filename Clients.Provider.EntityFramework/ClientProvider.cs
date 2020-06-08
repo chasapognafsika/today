@@ -44,9 +44,9 @@ namespace Clients.Provider.EntityFramework
 
         public async Task DeleteClientAsync(int id)
         {
-            var student = await _dbContext.Clients.FindAsync(id);
+            var client = await _dbContext.Clients.FindAsync(id);
 
-            _dbContext.Clients.Remove(student);
+            _dbContext.Clients.Remove(client);
             await _dbContext.SaveChangesAsync();
         }
     }

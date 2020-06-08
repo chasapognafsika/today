@@ -24,21 +24,21 @@ namespace Clients.Service.Tests
             var builder = new ContainerBuilder();
 
             /* IClientProvider mock */
-            var studentProviderMock = new Mock<IClientProvider>();
+            var clientProviderMock = new Mock<IClientProvider>();
 
-            studentProviderMock.Setup(provider => provider.GetClientAsync(It.IsAny<int>()))
+            clientProviderMock.Setup(provider => provider.GetClientAsync(It.IsAny<int>()))
                 .ReturnsAsync(new TestClientModel());
 
-            studentProviderMock.Setup(provider => provider.AddClientAsync(It.IsAny<IClientModel>()))
+            clientProviderMock.Setup(provider => provider.AddClientAsync(It.IsAny<IClientModel>()))
                 .ReturnsAsync(Constants.AddClientAsyncMockResult);
 
-            studentProviderMock.Setup(provider => provider.UpdateClientAsync(It.IsAny<IClientModel>()))
+            clientProviderMock.Setup(provider => provider.UpdateClientAsync(It.IsAny<IClientModel>()))
                 .Returns(Task.CompletedTask);
 
-            studentProviderMock.Setup(provider => provider.DeleteClientAsync(It.IsAny<int>()))
+            clientProviderMock.Setup(provider => provider.DeleteClientAsync(It.IsAny<int>()))
                 .Returns(Task.CompletedTask);
 
-            builder.RegisterInstance(studentProviderMock.Object)
+            builder.RegisterInstance(clientProviderMock.Object)
                 .As<IClientProvider>()
                 .SingleInstance();
 

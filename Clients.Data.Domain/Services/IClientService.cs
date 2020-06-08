@@ -7,9 +7,9 @@ namespace Clients.Domain.Services
     {
         Task<IClientModel> GetClientAsync(int id);
 
-        Task<int> AddClientAsync(IClientModel student);
+        Task<int> AddClientAsync(IClientModel client);
 
-        Task UpdateClientAsync(IClientModel student);
+        Task UpdateClientAsync(IClientModel client);
 
         Task DeleteClientAsync(int id);
 
