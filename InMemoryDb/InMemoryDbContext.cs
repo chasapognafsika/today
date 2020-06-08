@@ -12,6 +12,10 @@ namespace InMemoryDb
         public InMemoryDbContext(DbContextOptions<InMemoryDbContext> options): base(options)
         { }
 
+        public InMemoryDbContext()
+        { }
+
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);

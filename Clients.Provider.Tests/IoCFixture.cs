@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Clients.Data;
 using Clients.Domain.Providers;
 using Clients.Provider.EntityFramework;
-using SqlDb;
 
 namespace Clients.Service.Tests
 {
