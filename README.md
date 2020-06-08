@@ -15,7 +15,7 @@ in this PoC, <strong>adapters</strong> are the <strong>`Providers`</strong>, <st
 
 <strong>`Clients.Data`</strong> contains the entities and a custom implementation, that works, for <strong>`IDbContext`</strong>. 
 <br>
-<strong>`SqlDb`</strong> and <strong>`InMemoryDb`</strong> are 2 types of databases the providers are using to implement domain interfaces for providers.
+<strong>`SqlDb`</strong> and <strong>`InMemoryDb`</strong> are 2 types of databases the <strong>providers</strong> are using to implement <strong>domain interfaces</strong> for providers.
 
 To work with <strong>`SqlDb`</strong> you need to run <strong>`recreateDb.ps1`</strong> to create the Clients database in (localdb)\MSSQLLocalDB 
 (if you don't have permissions to run powershell scripts just copy paste the contents of script to a powershell)
