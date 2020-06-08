@@ -1,1 +1,1 @@
-dotnet run -c release --project . -- -c "Server=(localdb)\MSSQLLocalDB; Database=ClientsDataBase; Trusted_connection=true" -d -r $args;
+dotnet run -c release --project . -- -c "Server=(localdb)\MSSQLLocalDB; Database=Clients; Trusted_connection=true" -d -r $args;
