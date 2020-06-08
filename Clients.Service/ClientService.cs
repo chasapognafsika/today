@@ -37,7 +37,7 @@ namespace Client.Services
         public async Task DeleteClientAsync(int id)
         {
             var client = await _provider.GetClientAsync(id);
-            student.isDeleted = true;
+            client.isDeleted = true;
 
             await _provider.UpdateClientAsync(client);
         }
