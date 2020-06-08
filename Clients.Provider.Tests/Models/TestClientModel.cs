@@ -7,17 +7,15 @@ namespace Client.Services.Tests.Models
     {
         public int id { get; set; }
 
-        public string firstName { get; set; } = Guid.NewGuid().ToString();
+        public string firstName { get; set; } = "firstName";
 
-        public string lastName { get; set; } = Guid.NewGuid().ToString();
+        public string lastName { get; set; } = "lastName";
 
-        public string email { get; set; } = Guid.NewGuid().ToString();
+        public string email { get; set; } = "email";
 
-        public string gender { get; set; } = Guid.NewGuid().ToString();
+        public string gender { get; set; } = "male";
 
-        public string ipAddress { get; set; } = Guid.NewGuid().ToString();
-
-        public DateTime createdDate { get; set; }
+        public string ipAddress { get; set; } = "37.84.185.82";
 
         public bool isDeleted { get; set; }
 

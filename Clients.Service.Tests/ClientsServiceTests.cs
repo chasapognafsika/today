@@ -13,20 +13,20 @@ namespace Clients.Service.Tests
     [TestCaseOrderer(PriorityOrderer.Name, PriorityOrderer.Assembly)]
     public class ClientsServiceTests : IClassFixture<IoCFixture>
     {
-        private readonly IClientService _studentService;
-        
+        private readonly IClientService _clientService;
+        public const int idNotSupported = 9999;
         private readonly int _testClientId = new Random().Next(1, 10);
-        private readonly int _testEvilClientId = 666;
+        private readonly int _testUnsupportedClientId = idNotSupported;
 
         public ClientsServiceTests(IoCFixture fixture)
         {
-            _studentService = fixture.Container.Resolve<IClientService>();
+            _clientService = fixture.Container.Resolve<IClientService>();
         }
 
         [Fact]
         public async Task GetClientAsync_Should_Succeed()
         {
-            var student = await _studentService.GetClientAsync(_testClientId);
+            var student = await _clientService.GetClientAsync(_testClientId);
 
             Guid.Parse(student.firstName);
             Guid.Parse(student.lastName);
@@ -35,39 +35,39 @@ namespace Clients.Service.Tests
         [Fact]
         public async Task GetClientAsync_Should_Fail()
         {
-            Func<Task<IClientModel>> getEvilClient = async () => await _studentService.GetClientAsync(_testEvilClientId);
+            Func<Task<IClientModel>> getUnSupportedClient = async () => await _clientService.GetClientAsync(_testUnsupportedClientId);
 
-            var evilResult = await Task.Run(() => getEvilClient);
-            evilResult.Should().Throw<Exception>();
+            var unsupportedResult = await Task.Run(() => getUnSupportedClient);
+            unsupportedResult.Should().Throw<Exception>();
         }
 
         [Fact]
         public async Task AddClientAsync_Should_Succeed() 
         {
-            var studentId = await _studentService.AddClientAsync(new TestClientModel());
-            
-            studentId.Should().Be(Constants.AddClientAsyncMockResult);
+            var clientId = await _clientService.AddClientAsync(new TestClientModel());
+
+            clientId.Should().Be(Constants.AddClientAsyncMockResult);
         }
 
         [Fact]
         public async Task DeleteClientAsync_Should_Succeed() 
         {
-            await _studentService.DeleteClientAsync(_testClientId);
+            await _clientService.DeleteClientAsync(_testClientId);
         }
 
         [Fact]
         public async Task UndeleteClientAsync_Should_Succeed() 
         {
-            await _studentService.UndeleteClientAsync(_testClientId);
+            await _clientService.UndeleteClientAsync(_testClientId);
         }
 
         [Fact]
         public async Task UndeleteClientAsync_Should_Fail()
         {
-            Func<Task> undeleteEvilClient = async () => await _studentService.UndeleteClientAsync(_testEvilClientId);
+            Func<Task> undeleteUnSupportedClient = async () => await _clientService.UndeleteClientAsync(_testUnsupportedClientId);
 
-            var evilResult = await Task.Run(() => undeleteEvilClient);
-            evilResult.Should().Throw<Exception>();
+            var unSupportedResult = await Task.Run(() => undeleteUnSupportedClient);
+            unSupportedResult.Should().Throw<Exception>();
         }
 
     }
