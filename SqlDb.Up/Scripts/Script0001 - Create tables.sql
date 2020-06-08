@@ -6,6 +6,7 @@
 	email nvarchar(50) NOT NULL,
 	gender nvarchar(10) NOT NULL,
 	ipAddress nvarchar(20) NOT NULL,
+	createdDate datetime NOT NULL,
 	deleted bit NOT NULL
 	) ON [PRIMARY]
 GO

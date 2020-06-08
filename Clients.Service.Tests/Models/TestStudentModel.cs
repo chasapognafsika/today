@@ -17,7 +17,7 @@ namespace Client.Services.Tests.Models
 
         public string ipAddress { get; set; } = Guid.NewGuid().ToString();
 
-        public DateTime dateCreated { get; set; }
+        public DateTime createdDate { get; set; }
 
         public bool isDeleted { get; set; }
     
